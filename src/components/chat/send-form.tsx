@@ -118,11 +118,11 @@ export default function SendForm({
       className="flex items-center justify-center w-full space-x-2"
     >
       <div className="relative w-full max-w-xs">
-        <MicIcon
+        {/* <MicIcon
           onClick={toggleSpeech}
           className={`absolute right-2 h-4 w-4 top-1/2 transition-all transform -translate-y-2 ${listening ? "text-red-500 scale-125 animate-pulse" : "text-gray-500"
             } dark:text-gray-400 hover:scale-125 cursor-pointer`}
-        />
+        /> */}
 
         <Textarea
           value={input}
