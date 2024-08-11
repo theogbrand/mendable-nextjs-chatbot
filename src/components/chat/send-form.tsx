@@ -35,6 +35,13 @@ export default function SendForm({
     transcript,
   } = useSpeechRecognition();
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit(event as unknown as React.FormEvent<HTMLFormElement>);
+    }
+  };
+
   useEffect(() => {
     if (!browserSupportsSpeechRecognition) {
       toast({
@@ -105,6 +112,7 @@ export default function SendForm({
   return (
     <form
       onSubmit={(event) => {
+        event.preventDefault();
         handleSubmit(event);
       }}
       className="flex items-center justify-center w-full space-x-2"
@@ -112,21 +120,21 @@ export default function SendForm({
       <div className="relative w-full max-w-xs">
         <MicIcon
           onClick={toggleSpeech}
-          className={`absolute right-2 h-4 w-4 top-1/2 transition-all transform -translate-y-2 ${
-            listening ? "text-red-500 scale-125 animate-pulse" : "text-gray-500"
-          } dark:text-gray-400 hover:scale-125 cursor-pointer`}
+          className={`absolute right-2 h-4 w-4 top-1/2 transition-all transform -translate-y-2 ${listening ? "text-red-500 scale-125 animate-pulse" : "text-gray-500"
+            } dark:text-gray-400 hover:scale-125 cursor-pointer`}
         />
 
         <Textarea
           value={input}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           className={`pr-8 resize-none mendable-textarea min-h-[20px] ${textareaHeight}`}
           placeholder="Type a message..."
           ref={textareaRef}
         />
       </div>
 
-      <Button className="h-10">
+      <Button type="submit" className="h-10">
         {isLoading ? (
           <div className="flex gap-2 items-center">
             <Grid
